@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,6 +23,8 @@ public class Transaction {
             member.borrowBook(book); 
             String transactionDetails = getCurrentDateTime() + " - Borrowing: " + member.getName() + " borrowed " + book.getTitle();
             System.out.println(transactionDetails);
+            
+            
             return true;
         } else {
             System.out.println("The book is not available.");
@@ -44,4 +49,14 @@ public class Transaction {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
     }
+    
+    // Save transaction details to a file
+    private void saveTransaction(String transactionDetails) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true))) {
+            writer.write(transactionDetails);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving the transaction: " + e.getMessage());
+        }
+}
 }

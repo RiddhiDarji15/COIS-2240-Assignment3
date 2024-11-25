@@ -71,7 +71,6 @@ public class LibraryManagement {
                     int bookId = scanner.nextInt();
                     
                     scanner.nextLine();
-
                     Member member = library.findMemberById(memberId);
                     Book book = library.findBookById(bookId);
 
