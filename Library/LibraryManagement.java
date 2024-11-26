@@ -37,8 +37,11 @@ public class LibraryManagement {
                     scanner.nextLine();
 
                     Member newMember = new Member(id, name);
-                    library.addMember(newMember);
-                    System.out.println("Member added successfully.");
+                    if (library.addMember(newMember)) {
+                        System.out.println("Member added successfully.");
+                    } else {
+                        System.out.println("Failed to add member. Duplicate ID.");
+                    }
                     break;
                 case 2:
                     System.out.print("Enter book ID: ");
@@ -49,8 +52,11 @@ public class LibraryManagement {
                     scanner.nextLine();
 
                     Book newBook = new Book(id, title);
-                    library.addBook(newBook);
-                    System.out.println("Book added to library successfully.");
+                    if (library.addBook(newBook)) {
+                        System.out.println("Book added to library successfully.");
+                    } else {
+                        System.out.println("Failed to add book. Duplicate ID.");
+                    }
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
