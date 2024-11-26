@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ public class Transaction {
             member.borrowBook(book); 
             String transactionDetails = getCurrentDateTime() + " - Borrowing: " + member.getName() + " borrowed " + book.getTitle();
             System.out.println(transactionDetails);
-            
+            saveTransaction(transactionDetails);
             
             return true;
         } else {
@@ -39,6 +41,7 @@ public class Transaction {
             book.returnBook();
             String transactionDetails = getCurrentDateTime() + " - Returning: " + member.getName() + " returned " + book.getTitle();
             System.out.println(transactionDetails);
+            saveTransaction(transactionDetails);
         } else {
             System.out.println("This book was not borrowed by the member.");
         }
@@ -52,11 +55,26 @@ public class Transaction {
     
     // Save transaction details to a file
     private void saveTransaction(String transactionDetails) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true))) {
+        try {
+        	BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true));        
             writer.write(transactionDetails);
-            writer.newLine();
+            System.out.println("Transaction saved: " + transactionDetails);
+            writer.close();
         } catch (IOException e) {
+        	e.printStackTrace();
             System.out.println("An error occurred while saving the transaction: " + e.getMessage());
         }
-}
+    }
+ // Display transaction history
+    public void displayTransactionHistory() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("transactions.txt"))) {
+            String line;
+            System.out.println("Transaction History:");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the transaction history: " + e.getMessage());
+        }
+    }
 }

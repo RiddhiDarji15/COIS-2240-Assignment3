@@ -115,7 +115,7 @@ public class LibraryManagement {
                     }
                     break;
                 case 6:
-                	//Transaction.displayTransactionHistory();
+                	Transaction.getTransaction().displayTransactionHistory();               	
                     break;
                 case 7:
                     System.out.println("Exiting. Good Bye..");
