@@ -58,6 +58,8 @@ public class Transaction {
         try {
         	BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.txt", true));        
             writer.write(transactionDetails);
+            writer.newLine();
+            writer.newLine(); // Add an extra newline for separation
             System.out.println("Transaction saved: " + transactionDetails);
             writer.close();
         } catch (IOException e) {
