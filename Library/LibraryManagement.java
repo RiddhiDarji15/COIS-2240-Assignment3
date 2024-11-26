@@ -50,13 +50,16 @@ public class LibraryManagement {
                     String title = scanner.next();
                     
                     scanner.nextLine();
-
+                    try {
                     Book newBook = new Book(id, title);
                     if (library.addBook(newBook)) {
                         System.out.println("Book added to library successfully.");
                     } else {
                         System.out.println("Failed to add book. Duplicate ID.");
                     }
+                    	} catch (Exception e) {
+                    		System.out.println("There is an error: " + e.getMessage());
+                    	}
                     break;
                 case 3:
                 	System.out.println("\n--- Available Members ---");
