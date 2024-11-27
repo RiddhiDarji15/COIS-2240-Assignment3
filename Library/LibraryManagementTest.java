@@ -5,6 +5,7 @@ import org.junit.Test;
 
 public class LibraryManagementTest {
 	 private Library library;
+	 private Transaction transaction;
 	 
 	@Before
 	    public void setUp() {
@@ -48,8 +49,37 @@ public class LibraryManagementTest {
 	           
 	        } catch (Exception e) {
 	            assertEquals("Invalid book ID. It must be between 100 and 999.", e.getMessage());
+	            }
 	        }
-	        
+	        @Test
+	        public void testBorrowReturn() {
+	            try {
+	                // Instantiate a Book object and a Member object
+	                Book book = new Book(200, "Test Book");
+	                Member member = new Member(1, "Test Member");
+
+	                // Ensure the book is available
+	                assertTrue(book.isAvailable());
+
+	                // Borrow the book
+	                boolean borrowResult = transaction.borrowBook(book, member);
+	                assertTrue(borrowResult);
+	                assertFalse(book.isAvailable());
+
+	                // Attempt to borrow the book again
+	                borrowResult = transaction.borrowBook(book, member);
+	                assertFalse(borrowResult);
+
+	                // Return the book
+	                boolean returnResult = transaction.returnBook(book, member);
+	                assertTrue(returnResult);
+	                assertTrue(book.isAvailable());
+
+	                // Attempt to return the book again
+	                returnResult = transaction.returnBook(book, member);
+	                assertFalse(returnResult);
+	            } catch (Exception e) {
+	            } 
 	    }
 	}
 
