@@ -1,4 +1,9 @@
 import static org.junit.Assert.*;
+
+import java.lang.reflect.Modifier;
+
+import java.lang.reflect.Constructor;
+
 import org.junit.Before;
 
 import org.junit.Test;
@@ -78,8 +83,24 @@ public class LibraryManagementTest {
 	                // Attempt to return the book again
 	                returnResult = transaction.returnBook(book, member);
 	                assertFalse(returnResult);
-	            } catch (Exception e) {
-	            } 
+	            } catch (Exception e) {}
+	            }
+	            @Test
+	            public void testSingletonTransaction() throws Exception {
+	                // Use reflection to get the constructor of the Transaction class
+	                Constructor<Transaction> constructor = Transaction.class.getDeclaredConstructor();
+
+	                // Check if the constructor is private
+	                int modifiers = constructor.getModifiers();
+	                assertTrue(Modifier.isPrivate(modifiers));
+
+	                // Ensure that the Transaction class cannot be instantiated directly
+	                constructor.setAccessible(true);
+	                try {
+	                    Transaction instance = constructor.newInstance();
+	                } catch (Exception e) {
+	                    // Expected exception
+	                }
 	    }
 	}
 
